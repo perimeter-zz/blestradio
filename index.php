@@ -1,3 +1,54 @@
+<?php
+$submission_message = '';
+$contact_email = 'hello@blestradio.com'; // Destination email address
+
+// Check for POST submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    // 1. Collect and sanitize form data
+    $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : 'Unknown';
+    $email = isset($_POST['email']) ? htmlspecialchars(trim($_POST['email'])) : 'Unknown';
+    $role = isset($_POST['role']) ? htmlspecialchars(trim($_POST['role'])) : 'N/A';
+
+    // 2. Construct the email details
+    $to = $contact_email;
+    $subject = "New Blest Radio Interest: Role - " . $role;
+    $message_body = "A new user has submitted the interest form.\n\n"
+             . "Name: " . $name . "\n"
+             . "Email: " . $email . "\n"
+             . "Role of Interest: " . $role . "\n\n"
+             . "Please follow up with this prospective " . $role . ".";
+
+    // Headers must include Reply-To for easy response
+    $headers = 'From: BlestRadio Website <noreply@blestradio.com>' . "\r\n" .
+               'Reply-To: ' . $email . "\r\n" .
+               'X-Mailer: PHP/' . phpversion();
+
+    // 3. Attempt to send the email and redirect (PRG Pattern)
+    if (mail($to, $subject, $message_body, $headers)) {
+        // Successful mail: Redirect with success status and user data
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?status=success&name=' . urlencode($name) . '&role=' . urlencode($role) . '&email_to=' . urlencode($contact_email));
+        exit;
+    } else {
+        // Mail failed: Redirect with error status
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?status=error&email_to=' . urlencode($contact_email));
+        exit;
+    }
+}
+
+// 4. Check for GET status parameter after redirect and set the message
+if (isset($_GET['status'])) {
+    if ($_GET['status'] == 'success') {
+        $name = isset($_GET['name']) ? htmlspecialchars($_GET['name']) : 'Friend';
+        $role = isset($_GET['role']) ? htmlspecialchars($_GET['role']) : 'applicant';
+        $email_to = isset($_GET['email_to']) ? htmlspecialchars($_GET['email_to']) : $contact_email;
+        $submission_message = '<div style="background-color: #4CAF50; color: white; padding: 15px; margin-bottom: 30px; border-radius: 8px;">✅ **Success!** Thank you, **' . $name . '**! Your information has been sent to ' . $email_to . '. We will be in touch soon regarding the ' . $role . ' role.</div>';
+    } elseif ($_GET['status'] == 'error') {
+        $email_to = isset($_GET['email_to']) ? htmlspecialchars($_GET['email_to']) : $contact_email;
+        $submission_message = '<div style="background-color: #f44336; color: white; padding: 15px; margin-bottom: 30px; border-radius: 8px;">❌ **Error!** Sorry, there was an issue sending your request. Please try again or email us directly at ' . $email_to . '.</div>';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -196,16 +247,6 @@
             text-align: center;
         }
 
-        .cta-section h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .cta-section p {
-            font-size: 1.3em;
-            margin-bottom: 30px;
-        }
-
         /* Footer */
         footer {
             background-color: #2c3e50;
@@ -227,6 +268,82 @@
             text-decoration: underline;
         }
 
+        /* New Form Styles */
+        .intake-form-section .about-content {
+            max-width: 600px; /* Make the form area slightly narrower */
+        }
+        .highlight-local {
+            color: #ffcc00; /* New highlight color for local focus, contrasting with white text */
+            font-weight: 700;
+        }
+        .intake-form {
+            margin-top: 40px;
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: white; /* Ensure labels are white */
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+        .role-selection {
+            padding: 10px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .role-selection label {
+            margin-bottom: 15px;
+        }
+        .radio-options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .radio-options input[type="radio"] {
+            /* Hide the default radio button */
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .radio-label {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .radio-options input[type="radio"]:checked + .radio-label {
+            background-color: white;
+            color: #667eea; /* Primary color */
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        .radio-options input[type="radio"]:hover + .radio-label {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .intake-form .cta-btn {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
@@ -243,11 +360,18 @@
             .cta-section h2 {
                 font-size: 2em;
             }
+
+            .radio-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .radio-label {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <h1>BLEST RADIO</h1>
@@ -260,7 +384,6 @@
         </div>
     </section>
 
-    <!-- Features Section -->
     <section class="features" id="features">
         <h2>What We Offer</h2>
         <div class="feature-grid">
@@ -297,7 +420,6 @@
         </div>
     </section>
 
-    <!-- About Section -->
     <section class="about" id="about">
         <div class="about-content">
             <h2>About Blest Radio</h2>
@@ -307,14 +429,44 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <h2>Ready to Join Us?</h2>
-        <p>Whether you're an artist, a radio host, or just love great music...</p>
-        <a href="mailto:contact@blestradio.com" class="cta-btn">Get In Touch</a>
+    <section class="cta-section intake-form-section">
+        <div class="about-content">
+            <h2>Ready to Join Us?</h2>
+            <p>We are starting small and local in the <span class="highlight-local">Raleigh, NC area</span>, aiming to find **Hosts** to cover our 24-hour broadcast day.</p>
+            <p>When there is no host, a pleasing video will play showing verifiable, repeatable footage of nature, the seasons, and the stars.</p>
+            <p>Tell us what role you're interested in, and we'll tailor your onboarding experience!</p>
+
+            <?php echo $submission_message; // Display success/error message after PRG redirect ?>
+
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="intake-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group role-selection">
+                    <label>I am interested in becoming a:</label>
+                    <div class="radio-options">
+                        <input type="radio" id="role-artist" name="role" value="Artist" required>
+                        <label for="role-artist" class="radio-label">Artist</label>
+
+                        <input type="radio" id="role-host" name="role" value="Host">
+                        <label for="role-host" class="radio-label">Host</label>
+
+                        <input type="radio" id="role-both" name="role" value="Both">
+                        <label for="role-both" class="radio-label">Both</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="cta-btn">Submit & Get Started</button>
+            </form>
+        </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <p>© 2025 Blest Radio. All rights reserved.</p>
         <p>Promoting HUMAN Independent Music Artists & Citizen Journalism</p>
