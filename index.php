@@ -1,16 +1,19 @@
 <?php
+// Start the session at the very beginning to use $_SESSION variables
+// This must be the first thing in the PHP file.
+session_start();
 $submission_message = '';
-$contact_email = 'hello@blestradio.com'; // Destination email address
+$contact_email = 'hello@blestradio.com'; // Destination email address - UPDATED
 
-// Check for POST submission
+// --- 1. Handle POST Submission ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    // 1. Collect and sanitize form data
+    // Collect and sanitize form data
     $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : 'Unknown';
     $email = isset($_POST['email']) ? htmlspecialchars(trim($_POST['email'])) : 'Unknown';
     $role = isset($_POST['role']) ? htmlspecialchars(trim($_POST['role'])) : 'N/A';
 
-    // 2. Construct the email details
+    // Construct the email details
     $to = $contact_email;
     $subject = "New Blest Radio Interest: Role - " . $role;
     $message_body = "A new user has submitted the interest form.\n\n"
@@ -19,34 +22,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
              . "Role of Interest: " . $role . "\n\n"
              . "Please follow up with this prospective " . $role . ".";
 
-    // Headers must include Reply-To for easy response
+    // Headers
     $headers = 'From: BlestRadio Website <noreply@blestradio.com>' . "\r\n" .
                'Reply-To: ' . $email . "\r\n" .
                'X-Mailer: PHP/' . phpversion();
 
-    // 3. Attempt to send the email and redirect (PRG Pattern)
+    // Attempt to send the email
     if (mail($to, $subject, $message_body, $headers)) {
-        // Successful mail: Redirect with success status and user data
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?status=success&name=' . urlencode($name) . '&role=' . urlencode($role) . '&email_to=' . urlencode($contact_email));
-        exit;
+        // Successful mail: Store data in session
+        $_SESSION['form_status'] = 'success';
+        $_SESSION['form_name'] = $name;
+        $_SESSION['form_role'] = $role;
+        $_SESSION['form_email_to'] = $contact_email;
     } else {
-        // Mail failed: Redirect with error status
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?status=error&email_to=' . urlencode($contact_email));
-        exit;
+        // Mail failed: Store error status
+        $_SESSION['form_status'] = 'error';
+        $_SESSION['form_email_to'] = $contact_email;
     }
+    
+    // PRG Pattern: Redirect to the clean page (without query strings)
+    // This redirection prevents the 'blank page' issue and accidental resubmission
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
 }
 
-// 4. Check for GET status parameter after redirect and set the message
-if (isset($_GET['status'])) {
-    if ($_GET['status'] == 'success') {
-        $name = isset($_GET['name']) ? htmlspecialchars($_GET['name']) : 'Friend';
-        $role = isset($_GET['role']) ? htmlspecialchars($_GET['role']) : 'applicant';
-        $email_to = isset($_GET['email_to']) ? htmlspecialchars($_GET['email_to']) : $contact_email;
+// --- 2. Handle GET Page Load (Display & Clear Session Message) ---
+if (isset($_SESSION['form_status'])) {
+    // Determine the message content
+    if ($_SESSION['form_status'] == 'success') {
+        $name = isset($_SESSION['form_name']) ? htmlspecialchars($_SESSION['form_name']) : 'Friend';
+        $role = isset($_SESSION['form_role']) ? htmlspecialchars($_SESSION['form_role']) : 'applicant';
+        $email_to = isset($_SESSION['form_email_to']) ? htmlspecialchars($_SESSION['form_email_to']) : $contact_email;
+        // The submission message is now generated from session data
         $submission_message = '<div style="background-color: #4CAF50; color: white; padding: 15px; margin-bottom: 30px; border-radius: 8px;">✅ **Success!** Thank you, **' . $name . '**! Your information has been sent to ' . $email_to . '. We will be in touch soon regarding the ' . $role . ' role.</div>';
-    } elseif ($_GET['status'] == 'error') {
-        $email_to = isset($_GET['email_to']) ? htmlspecialchars($_GET['email_to']) : $contact_email;
+    } elseif ($_SESSION['form_status'] == 'error') {
+        $email_to = isset($_SESSION['form_email_to']) ? htmlspecialchars($_SESSION['form_email_to']) : $contact_email;
         $submission_message = '<div style="background-color: #f44336; color: white; padding: 15px; margin-bottom: 30px; border-radius: 8px;">❌ **Error!** Sorry, there was an issue sending your request. Please try again or email us directly at ' . $email_to . '.</div>';
     }
+    
+    // Clear the session variables immediately after reading them 
+    // This is the crucial step that prevents the message from lingering on refresh.
+    unset($_SESSION['form_status']);
+    unset($_SESSION['form_name']);
+    unset($_SESSION['form_role']);
+    unset($_SESSION['form_email_to']);
 }
 ?>
 <!DOCTYPE html>
@@ -436,7 +455,7 @@ if (isset($_GET['status'])) {
             <p>When there is no host, a pleasing video will play showing verifiable, repeatable footage of nature, the seasons, and the stars.</p>
             <p>Tell us what role you're interested in, and we'll tailor your onboarding experience!</p>
 
-            <?php echo $submission_message; // Display success/error message after PRG redirect ?>
+            <?php echo $submission_message; // Display success/error message from session ?>
 
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="intake-form">
                 <div class="form-group">
