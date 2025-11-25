@@ -445,6 +445,7 @@ if (isset($_SESSION['form_status'])) {
             <p>Blest Radio is a <span class="highlight">24/7 radio station</span> dedicated to promoting independent music artists and citizen journalism.</p>
             <p>We believe in the power of <span class="highlight">human creativity</span> and authentic storytelling. Our platform gives voice to indie artists and aspiring radio hosts who want to share their passion with the world.</p>
             <p>Stay tuned for streams, playlists, artist showcases, and real conversations that matter.</p>
+            <h3>(((Spring 2026 is our "Go-Live" target)))</h3>
         </div>
     </section>
 
@@ -453,7 +454,7 @@ if (isset($_SESSION['form_status'])) {
             <h2>Ready to Join Us?</h2>
             <p>We are starting small and local in the <span class="highlight-local">Raleigh, NC area</span>, aiming to find **Hosts** to cover our 24-hour broadcast day.</p>
             <p>When there is no host, a pleasing video will play showing verifiable, repeatable footage of nature, the seasons, and the stars.</p>
-            <p>Tell us what role you're interested in, and we'll tailor your onboarding experience!</p>
+            <p>Tell us what role interests you, and we'll tailor your onboarding experience!</p>
 
             <?php echo $submission_message; // Display success/error message from session ?>
 
