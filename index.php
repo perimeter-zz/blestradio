@@ -445,7 +445,7 @@ if (isset($_SESSION['form_status'])) {
             <p>Blest Radio is a <span class="highlight">24/7 radio station</span> dedicated to promoting independent music artists and citizen journalism.</p>
             <p>We believe in the power of <span class="highlight">human creativity</span> and authentic storytelling. Our platform gives voice to indie artists and aspiring radio hosts who want to share their passion with the world.</p>
             <p>Stay tuned for streams, playlists, artist showcases, and real conversations that matter.</p>
-            <h3 style="color: blue;">( ( ( <span style="color: green;">Spring 2026 LIVE ON AIR</span> ) ) )</h3>       
+            <h3 style="color: blue;">( ( ( <span style="color: green;">Spring 2027 LIVE ON AIR</span> ) ) )</h3>       
         </div>
     </section>
 
