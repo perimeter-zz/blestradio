@@ -15,24 +15,133 @@ body {
     background-color: var(--snow);
     color: var(--text-main);
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.4; /* Tightened from 1.6 */
 }
 
-/* 3. Hero - The Mountain Range Gradient */
+/* 3. Hero Section - More Compact */
 .hero {
     background: linear-gradient(135deg, var(--pine-deep) 0%, var(--mountain-slate) 100%);
     color: white;
     text-align: center;
-    padding: 120px 20px;
+    padding: 60px 20px; /* Reduced from 120px */
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
-    letter-spacing: 8px;
+    font-size: 3rem;
+    letter-spacing: 4px;
     margin-bottom: 10px;
 }
 
-/* 4. Buttons - Rugged Outdoor Style */
+/* 4. Features Grid - Centered & Tight */
+.features {
+    max-width: 1000px; /* Keeps cards from drifting too far apart */
+    margin: 0 auto;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.feature-card {
+    background: var(--birch);
+    padding: 25px;
+    border-radius: 4px;
+    border-bottom: 4px solid var(--pine-mist);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content inside card */
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* 5. About Section - Centered */
+.about {
+    padding: 50px 20px;
+}
+
+.about-content {
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* 6. Join Us Section - Centered & Narrowed */
+.cta-section {
+    background: var(--pine-deep);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.intake-form {
+    max-width: 450px; /* Narrower form looks better centered */
+    margin: 30px auto 0;
+    text-align: center; /* Centers the labels */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="text"], input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box; /* Fixes width issues */
+}
+
+/* Centering the Radio Buttons */
+.radio-options {
+    display: flex;
+    justify-content: center; /* This is the fix for centering radios */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.radio-label {
+    flex: 1;
+    border: 2px solid white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked + .radio-label {
+    background: var(--snow);
+    color: var(--pine-deep);
+}
+
+/* 7. Buttons */
 .cta-btn {
     display: inline-block;
     padding: 14px 30px;
@@ -40,8 +149,10 @@ body {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    border-radius: 4px; /* More boxy than round */
+    border-radius: 4px;
     margin: 10px;
+    border: none;
+    cursor: pointer;
     transition: 0.3s;
 }
 
@@ -55,84 +166,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* 5. Feature Grid - Fixes the layout */
-.features {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
-}
-
-.feature-card {
-    background: var(--birch);
-    padding: 40px 20px;
-    border-radius: 4px;
-    border-bottom: 4px solid var(--pine-mist);
-    transition: 0.3s;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-}
-
-.feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-/* 6. Form Styles */
-.cta-section {
-    background: var(--pine-deep);
-    color: white;
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.intake-form {
-    max-width: 500px;
-    margin: 40px auto 0;
-    text-align: left;
-}
-
-.form-group { margin-bottom: 20px; }
-
-input[type="text"], input[type="email"] {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 4px;
-    margin-top: 8px;
-}
-
-.radio-options {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.radio-label {
-    flex: 1;
-    text-align: center;
-    border: 2px solid white;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-input[type="radio"] { display: none; }
-
-input[type="radio"]:checked + .radio-label {
-    background: var(--snow);
-    color: var(--pine-deep);
-}
-
+/* 8. Footer */
 footer {
     background: #111;
     color: #888;

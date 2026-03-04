@@ -53,8 +53,7 @@ if (isset($_SESSION['form_status'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blest Radio - Independent Music & Citizen Journalism</title>
     
-    <link rel="stylesheet" href="assets/css/style.css">
-    
+    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">   
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -133,7 +132,7 @@ if (isset($_SESSION['form_status'])) {
                 </div>
 
                 <div class="form-group role-selection">
-                    <label>I am interested in becoming a:</label>
+                    <label>I CAN Perform as:</label>
                     <div class="radio-options">
                         <input type="radio" id="role-artist" name="role" value="Artist" required>
                         <label for="role-artist" class="radio-label">Artist</label>
