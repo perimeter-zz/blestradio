@@ -1,0 +1,92 @@
+/* style.css */
+
+:root {
+    --pine-deep: #1b3022;      /* Dark Forest Green */
+    --mountain-slate: #3d5a80; /* Blue-Grey Rock */
+    --birch: #f4f1de;         /* Off-white wood/bark */
+    --snow: #ffffff;
+    --burnt-orange: #e07a5f;   /* Pop of color like a snowboard */
+    --text-main: #2c3e50;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--snow);
+    color: var(--text-main);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Hero - Mountain Morning Vibe */
+.hero {
+    background: linear-gradient(135deg, var(--pine-deep) 0%, var(--mountain-slate) 100%);
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3em;
+    letter-spacing: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Buttons - Rugged & Flat */
+.cta-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: var(--burnt-orange);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px; /* Less round, more solid */
+    font-weight: 700;
+    transition: 0.3s;
+    margin: 10px;
+}
+
+.cta-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+.cta-btn.secondary {
+    background-color: transparent;
+    border: 2px solid white;
+}
+
+/* Features - Birch Bark Cards */
+.feature-card {
+    background-color: var(--birch);
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.feature-card h3 {
+    color: var(--pine-deep);
+}
+
+/* Intake Form Section */
+.cta-section {
+    background: var(--pine-deep);
+    color: white;
+    padding: 80px 20px;
+}
+
+.radio-label {
+    border: 2px solid white;
+    padding: 10px 20px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Form inputs */
+input[type="text"], input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: none;
+}
