@@ -117,7 +117,7 @@ if (isset($_SESSION['form_status'])) {
     <section class="cta-section intake-form-section">
         <div class="about-content">
             <h2>Ready to Join Us?</h2>
-            <p>We are starting small and local in the <span class="highlight-local">Raleigh, NC area</span>.</p>
+            <p>We will be broadcasting LIVE from the <span class="highlight-local">Raleigh, NC area</span>. (for starters)</p>
 
             <?php echo $submission_message; ?>
 
