@@ -482,7 +482,7 @@ if (isset($_SESSION['form_status'])) {
                     </div>
                 </div>
 
-                <button type="submit" class="cta-btn">Submit & Get Started</button>
+                <button type="submit" class="cta-btn">Let's Learn Together</button>
             </form>
         </div>
     </section>
