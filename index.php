@@ -75,27 +75,27 @@ if (isset($_SESSION['form_status'])) {
             <div class="feature-card">
                 <div class="feature-icon">🎵</div>
                 <h3>Independent Artists</h3>
-                <p>Showcase your music to a global audience. We celebrate human creativity and authentic artistry.</p>
+                <p>Showcase your music to a global audience. We celebrate creativity and authentic artistry.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🎙️</div>
-                <h3>Radio Hosts Wanted</h3>
-                <p>Calling all yappers! Join our team of radio hosts and share your voice with the world.</p>
+                <h3>Aspiring Radio Hosts</h3>
+                <p>Calling all yappers! Get some reps, and share your voice with the world! </p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📻</div>
                 <h3>24/7 Streaming</h3>
-                <p>Non-stop music, playlists, and artist showcases. Tune in anytime, anywhere.</p>
+                <p>When we are not LIVE hosting, we play Community-Curated songs, animated shorts, and crickets.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🗞️</div>
                 <h3>Citizen Journalism</h3>
-                <p>Real stories from real people. We promote authentic voices and independent reporting.</p>
+                <p>From the Streets to the Kitchen Table Podcaster, we want Authentic voices and independent reporting.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🌍</div>
-                <h3>Global Community</h3>
-                <p>Connect with artists, listeners, and creators from around the world.</p>
+                <h3>Blest Community</h3>
+                <p>Connect, Listen, Create.  Our worries are few when our Blessings are Many!</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">✨</div>
@@ -117,7 +117,7 @@ if (isset($_SESSION['form_status'])) {
     <section class="cta-section intake-form-section">
         <div class="about-content">
             <h2>Ready to Join Us?</h2>
-            <p>We will be broadcasting LIVE from the <span class="highlight-local">Raleigh, NC area</span>. (for starters)</p>
+            <p>Initially we will be broadcasting LIVE from the <span class="highlight-local">Raleigh, NC area</span>. More locations to come!</p>
 
             <?php echo $submission_message; ?>
 
